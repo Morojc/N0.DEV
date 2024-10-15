@@ -51,30 +51,30 @@ export default function StickerGeneratorDashboard() {
       {/* Sidebar - hidden on mobile unless menu is open */}
       <div className={`${isMobileMenuOpen ? 'block' : 'hidden'} md:block md:w-16 backdrop-blur-sm p-1 flex flex-col items-center border-r ${theme === 'dark' ? 'border-gray-700' : 'border-gray-200'}`}>
         <div className="flex flex-col h-full justify-between">
-          <nav className="space-y-3 py-3">
-            <Button variant="ghost" size="icon" title="New Sticker" className="h-10 w-10">
-              <PlusCircle className={`h-5 w-5 ${theme === 'dark' ? 'text-white' : 'text-gray-600'}`} />
+          <nav className="space-y-4 py-4">
+            <Button variant="ghost" size="icon" title="New Sticker" className="h-12 w-12">
+              <PlusCircle className={`h-6 w-6 ${theme === 'dark' ? 'text-white' : 'text-gray-600'}`} />
             </Button>
-            <Button variant="ghost" size="icon" title="My Stickers" className="h-10 w-10">
-              <ImageIcon className={`h-5 w-5 ${theme === 'dark' ? 'text-white' : 'text-gray-600'}`} />
+            <Button variant="ghost" size="icon" title="My Stickers" className="h-12 w-12">
+              <ImageIcon className={`h-6 w-6 ${theme === 'dark' ? 'text-white' : 'text-gray-600'}`} />
             </Button>
-            <Button variant="ghost" size="icon" title="Settings" className="h-10 w-10">
-              <Settings className={`h-5 w-5 ${theme === 'dark' ? 'text-white' : 'text-gray-600'}`} />
+            <Button variant="ghost" size="icon" title="Settings" className="h-12 w-12">
+              <Settings className={`h-6 w-6 ${theme === 'dark' ? 'text-white' : 'text-gray-600'}`} />
             </Button>
-            <Button variant="ghost" size="icon" title="Help" className="h-10 w-10">
-              <HelpCircle className={`h-5 w-5 ${theme === 'dark' ? 'text-white' : 'text-gray-600'}`} />
+            <Button variant="ghost" size="icon" title="Help" className="h-12 w-12">
+              <HelpCircle className={`h-6 w-6 ${theme === 'dark' ? 'text-white' : 'text-gray-600'}`} />
             </Button>
           </nav>
           
           {/* User options button */}
-          <div className="pb-4 w-full flex justify-center md:justify-start md:pl-1">
+          <div className="pb-4 w-full flex justify-center">
             <Popover open={isOptionsOpen} onOpenChange={setIsOptionsOpen}>
               <PopoverTrigger asChild>
                 <button 
-                  className={`w-9 h-9 rounded-full bg-gradient-to-r ${theme === 'dark' ? 'from-purple-600 to-pink-600' : 'from-purple-500 to-pink-500'} flex items-center justify-center shadow-md hover:shadow-lg transition-all duration-300 group relative`}
+                  className={`w-10 h-10 rounded-full bg-gradient-to-r ${theme === 'dark' ? 'from-purple-600 to-pink-600' : 'from-purple-500 to-pink-500'} flex items-center justify-center shadow-md hover:shadow-lg transition-all duration-300 group relative`}
                   onClick={() => setIsOptionsOpen(!isOptionsOpen)}
                 >
-                  <User className="h-4 w-4 text-white" />
+                  <User className="h-5 w-5 text-white" />
                   <span className={`absolute -inset-0.5 rounded-full bg-gradient-to-r ${theme === 'dark' ? 'from-purple-600 to-pink-600' : 'from-purple-500 to-pink-500'} opacity-75 group-hover:opacity-100 blur animate-pulse`}></span>
                 </button>
               </PopoverTrigger>
