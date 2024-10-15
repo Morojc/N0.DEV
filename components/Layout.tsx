@@ -30,29 +30,28 @@ export default function Layout({ children, hideHeader = false }: LayoutProps) {
   return (
     <div className={`relative min-h-screen overflow-hidden flex flex-col md:flex-row ${theme === 'dark' ? 'bg-gray-900 text-white' : ''}`}>
       <AnimatedBackgroundLines />
+      
+      {/* Mobile Header - Always show the menu button */}
+      <header className={`md:hidden h-16 backdrop-blur-sm border-b ${theme === 'dark' ? 'border-gray-700' : 'border-gray-200'} p-4 flex items-center justify-between`}>
+        <Button variant="ghost" size="icon" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+          <Menu className={`h-6 w-6 ${theme === 'dark' ? 'text-white' : 'text-gray-600'}`} />
+        </Button>
+        {!hideHeader && <StyledAnimatedLogo />}
+        <div className="w-6" /> {/* Placeholder for balance */}
+      </header>
+
       {!hideHeader && (
-        <>
-          {/* Beta Version Indicator */}
-          <div className="absolute top-0 right-0 m-4 z-50">
-            <div className="relative">
-              <div className={`absolute inset-0 bg-gradient-to-r ${theme === 'dark' ? 'from-purple-600 to-pink-600' : 'from-purple-400 to-pink-500'} blur-sm opacity-75 rounded-full`}></div>
-              <div className={`relative ${theme === 'dark' ? 'bg-gray-800' : 'bg-white'} px-3 py-1 rounded-full border border-gray-200 shadow-sm`}>
-                <span className={`text-xs font-semibold bg-gradient-to-r ${theme === 'dark' ? 'from-purple-400 to-pink-400' : 'from-purple-600 to-pink-600'} bg-clip-text text-transparent`}>
-                  Beta Version
-                </span>
-              </div>
+        /* Beta Version Indicator */
+        <div className="absolute top-0 right-0 m-4 z-50">
+          <div className="relative">
+            <div className={`absolute inset-0 bg-gradient-to-r ${theme === 'dark' ? 'from-purple-600 to-pink-600' : 'from-purple-400 to-pink-500'} blur-sm opacity-75 rounded-full`}></div>
+            <div className={`relative ${theme === 'dark' ? 'bg-gray-800' : 'bg-white'} px-3 py-1 rounded-full border border-gray-200 shadow-sm`}>
+              <span className={`text-xs font-semibold bg-gradient-to-r ${theme === 'dark' ? 'from-purple-400 to-pink-400' : 'from-purple-600 to-pink-600'} bg-clip-text text-transparent`}>
+                Beta Version
+              </span>
             </div>
           </div>
-          
-          {/* Mobile Header */}
-          <header className={`md:hidden h-16 backdrop-blur-sm border-b ${theme === 'dark' ? 'border-gray-700' : 'border-gray-200'} p-4 flex items-center justify-between`}>
-            <Button variant="ghost" size="icon" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
-              <Menu className={`h-6 w-6 ${theme === 'dark' ? 'text-white' : 'text-gray-600'}`} />
-            </Button>
-            <StyledAnimatedLogo />
-            <div className="w-6" /> {/* Placeholder for balance */}
-          </header>
-        </>
+        </div>
       )}
 
       {/* Sidebar */}
