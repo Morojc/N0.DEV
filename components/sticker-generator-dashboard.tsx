@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
-import { PlusCircle, Image as ImageIcon, Settings, HelpCircle, LogOut, Upload, Sparkles, Zap } from "lucide-react"
+import { PlusCircle, Image as ImageIcon, Settings, HelpCircle, LogOut, Upload, Sparkles, Zap, Plus } from "lucide-react"
 import { BackgroundLines } from './background-lines'
 import { AnimatedLogo } from './animated-logo'
 
@@ -44,7 +44,7 @@ export default function StickerGeneratorDashboard() {
           </header>
 
           <main className="flex-1 overflow-auto p-6">
-            <div className="max-w-2xl mx-auto space-y-6">
+            <div className="max-w-3xl mx-auto space-y-6">
               <div className="space-y-2 relative">
                 <div className="text-center mb-4">
                   <h2 className="text-3xl font-bold mb-2 text-gray-900">What can I help you shape?</h2>
@@ -52,7 +52,7 @@ export default function StickerGeneratorDashboard() {
                 </div>
                 
                 <div className="relative">
-                  {/* New Premium message section */}
+                  {/* Premium message section */}
                   <div className="bg-gray-100 border border-gray-300 border-b-0 rounded-t-md p-2 flex items-center justify-between text-xs">
                     <p className="text-gray-700">Need more messages? Get higher limits with Premium.</p>
                     <Button variant="outline" size="sm" className="text-yellow-600 border-yellow-600 hover:bg-yellow-50 h-6 text-xs px-2">
@@ -66,7 +66,7 @@ export default function StickerGeneratorDashboard() {
                     placeholder="Describe the sticker you want to generate... Let your imagination run wild!"
                     value={prompt}
                     onChange={(e) => setPrompt(e.target.value)}
-                    className="h-24 pb-12 backdrop-blur-sm border-gray-300 focus:border-gray-400 focus:ring-gray-400 resize-none rounded-t-none"
+                    className="w-full h-24 pb-12 backdrop-blur-sm border-gray-300 focus:border-gray-400 focus:ring-gray-400 resize-none rounded-t-none"
                     style={{ minHeight: '96px', maxHeight: '96px' }}
                   />
                   <Button 
@@ -83,6 +83,26 @@ export default function StickerGeneratorDashboard() {
                   >
                     <Upload className="h-5 w-5" />
                   </Button>
+                </div>
+
+                {/* Updated labels section with prompts and icons */}
+                <div className="flex flex-wrap gap-2 mt-3 text-xs text-gray-600">
+                  <button onClick={() => setPrompt("Image: Futuristic city with neon lights.")} className="border border-gray-300 px-2 py-1 rounded-full hover:bg-gray-100 transition-colors flex items-center font-bold">
+                    Image: Futuristic city
+                    <Plus className="h-3 w-3 ml-1 text-gray-400" />
+                  </button>
+                  <button onClick={() => setPrompt("Sticker: Cute cartoon animals with expressions.")} className="border border-gray-300 px-2 py-1 rounded-full hover:bg-gray-100 transition-colors flex items-center font-bold">
+                    Sticker: Cute animals
+                    <Plus className="h-3 w-3 ml-1 text-gray-400" />
+                  </button>
+                  <button onClick={() => setPrompt("Emoji: Celestial-themed emojis with glow.")} className="border border-gray-300 px-2 py-1 rounded-full hover:bg-gray-100 transition-colors flex items-center font-bold">
+                    Emoji: Celestial theme
+                    <Plus className="h-3 w-3 ml-1 text-gray-400" />
+                  </button>
+                  <button onClick={() => setPrompt("Video: Space journey through planets, wormhole.")} className="border border-gray-300 px-2 py-1 rounded-full hover:bg-gray-100 transition-colors flex items-center font-bold">
+                    Video: Space journey
+                    <Plus className="h-3 w-3 ml-1 text-gray-400" />
+                  </button>
                 </div>
               </div>
             </div>
