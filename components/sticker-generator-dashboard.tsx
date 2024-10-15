@@ -11,9 +11,20 @@ export default function StickerGeneratorDashboard() {
   const [prompt, setPrompt] = useState('')
 
   return (
-    <div className="relative min-h-screen overflow-hidden">
+    <div className="relative min-h-screen overflow-hidden flex flex-col">
       <BackgroundLines />
-      <div className="relative z-10 flex min-h-screen">
+      {/* Beta Version Indicator */}
+      <div className="absolute top-0 right-0 m-4 z-50">
+        <div className="relative">
+          <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-pink-500 blur-sm opacity-75 rounded-full"></div>
+          <div className="relative bg-white px-3 py-1 rounded-full border border-gray-200 shadow-sm">
+            <span className="text-xs font-semibold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+              Beta Version
+            </span>
+          </div>
+        </div>
+      </div>
+      <div className="relative z-10 flex flex-1">
         {/* Sidebar */}
         <div className="w-16 backdrop-blur-sm p-2 flex flex-col items-center border-r border-gray-200">
           <nav className="space-y-4 flex-grow py-4">
@@ -109,6 +120,23 @@ export default function StickerGeneratorDashboard() {
           </main>
         </div>
       </div>
+
+      {/* Updated footer section with pipe separators */}
+      <footer className="relative z-10 py-2 text-center">
+        <div className="flex justify-center items-center space-x-1 text-xs text-gray-500">
+          <a href="#" className="hover:underline">FAQ</a>
+          <span className="text-gray-300 px-1">|</span>
+          <a href="#" className="hover:underline">Pricing</a>
+          <span className="text-gray-300 px-1">|</span>
+          <a href="#" className="hover:underline">Terms</a>
+          <span className="text-gray-300 px-1">|</span>
+          <a href="#" className="hover:underline">AI Policy</a>
+          <span className="text-gray-300 px-1">|</span>
+          <a href="#" className="hover:underline">Privacy</a>
+          <span className="text-gray-300 px-1">|</span>
+          <a href="#" className="hover:underline">Legacy v0</a>
+        </div>
+      </footer>
     </div>
   )
 }
