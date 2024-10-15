@@ -36,7 +36,7 @@ const AnimatedAILogo = () => (
   >
     <g>
       {/* A */}
-      <path d="M15 80L35 20H55L75 80H60L55 65H35L30 80H15ZM39 50H51L45 30L39 50Z" fill="currentColor">
+      <path d="M30 75L45 30H55L70 75H60L57 65H43L40 75H30ZM45 55H55L50 40L45 55Z" fill="currentColor">
         <animate
           attributeName="opacity"
           values="1;0.5;1"
@@ -46,7 +46,7 @@ const AnimatedAILogo = () => (
       </path>
       
       {/* I */}
-      <path d="M80 20H95V80H80V20Z" fill="currentColor">
+      <path d="M75 30H85V75H75V30Z" fill="currentColor">
         <animate
           attributeName="opacity"
           values="1;0.5;1"
@@ -184,6 +184,13 @@ export default function AICreationOutput() {
     console.log('File upload button clicked');
   }
 
+  const getUserInitial = () => {
+    // Assuming the user's name is "User" for this example
+    // You should replace this with the actual user's name from your authentication system
+    const userName = "User";
+    return userName.charAt(0).toUpperCase();
+  }
+
   return (
     <Layout hideHeader hideFooter isAICreatorPage>
       <div className={`flex flex-col md:flex-row h-screen ${inter.className} text-sm`}>
@@ -215,12 +222,20 @@ export default function AICreationOutput() {
             <ScrollArea className="h-full pr-2">
               {messages.map((message) => (
                 <div key={message.id} className="flex mb-2 ml-1">
-                  <div className={`w-5 h-5 rounded-full flex items-center justify-center mr-1.5 shrink-0 ${
-                    message.isUser ? 'bg-blue-500' : ''
+                  <div className={`w-6 h-6 flex items-center justify-center mr-1.5 shrink-0 rounded ${
+                    message.isUser 
+                      ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white' 
+                      : 'bg-gradient-to-r from-blue-500 to-cyan-500 text-white'
                   }`}>
-                    {message.isUser ? <User size={10} className="text-white" /> : <AnimatedAILogo />}
+                    {message.isUser ? (
+                      <span className="text-xs font-semibold">{getUserInitial()}</span>
+                    ) : (
+                      <div className="flex items-center justify-center w-full h-full">
+                        <AnimatedAILogo />
+                      </div>
+                    )}
                   </div>
-                  <div className={`flex-1 text-[10px] md:text-xs ${message.isUser ? 'pt-0.5' : 'pt-1'} break-words`}>
+                  <div className={`flex-1 text-[10px] md:text-xs ${message.isUser ? 'pt-0.5' : 'pt-2'} break-words`}>
                     {message.content}
                   </div>
                 </div>
