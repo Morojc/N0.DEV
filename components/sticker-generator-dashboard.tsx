@@ -8,7 +8,14 @@ import { BackgroundLines } from './background-lines'
 import { AnimatedLogo } from './animated-logo'
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 
-export default function StickerGeneratorDashboard() {
+// New wrapper component for AnimatedLogo
+const StyledAnimatedLogo = () => (
+  <div className="relative w-48 h-12 flex items-center justify-center">
+    <AnimatedLogo />
+  </div>
+)
+
+export default function StickerGeneratorDashboard() { 
   const [prompt, setPrompt] = useState('')
   const [isOptionsOpen, setIsOptionsOpen] = useState(false)
 
@@ -111,17 +118,15 @@ export default function StickerGeneratorDashboard() {
         {/* Main content */}
         <div className="flex-1 flex flex-col">
           <header className="h-16 backdrop-blur-sm border-b border-gray-200 p-4 relative z-10 flex items-center">
-            <div className="w-48 h-12">
-              <AnimatedLogo />
-            </div>
+            <StyledAnimatedLogo />
           </header>
 
           <main className="flex-1 overflow-auto p-6">
             <div className="max-w-3xl mx-auto space-y-6">
               <div className="space-y-2 relative">
                 <div className="text-center mb-4">
-                  <h2 className="text-3xl font-bold mb-2 text-gray-900">What can I help you shape?</h2>
-                  <p className="text-lg text-gray-700">Generate stickers, ask more, be creative</p>
+                  <h2 className="text-3xl font-bold mb-2 text-gray-900">How can I assist your creativity?</h2>
+                  <p className="text-base text-gray-700">Let's create something fun together! Stickers, ideas, and endless creativity await!</p>
                 </div>
                 
                 <div className="relative">
@@ -136,7 +141,7 @@ export default function StickerGeneratorDashboard() {
 
                   <Textarea
                     id="prompt"
-                    placeholder="Describe the sticker you want to generate... Let your imagination run wild!"
+                    placeholder="Dream big! What unique creation do you have in mind... Let your imagination run wild!"
                     value={prompt}
                     onChange={(e) => setPrompt(e.target.value)}
                     className="w-full h-24 pb-12 backdrop-blur-sm border-gray-300 focus:border-gray-400 focus:ring-gray-400 resize-none rounded-t-none"
