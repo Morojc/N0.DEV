@@ -74,14 +74,14 @@ export default function AICreationOutput() {
 
   return (
     <Layout hideHeader>
-      <div className="container mx-auto p-2 sm:p-4 h-[calc(100vh-4rem)] flex flex-col">
-        <div className="grid gap-4 md:gap-6 grid-cols-1 md:grid-cols-2 flex-grow">
-          <Card className="flex flex-col">
+      <div className="flex h-screen">
+        <div className="flex-1 flex flex-col md:flex-row">
+          <Card className="flex-1 flex flex-col rounded-none border-0">
             <CardHeader className="p-3 sm:p-4">
               <CardTitle className="text-lg sm:text-xl">Chat</CardTitle>
             </CardHeader>
             <CardContent className="flex-grow overflow-hidden p-2 sm:p-4">
-              <ScrollArea className="h-[calc(100vh-16rem)] md:h-[calc(100vh-12rem)] pr-2 sm:pr-4">
+              <ScrollArea className="h-full pr-2 sm:pr-4">
                 {messages.map((message) => (
                   <div
                     key={message.id}
@@ -115,7 +115,7 @@ export default function AICreationOutput() {
               </form>
             </CardFooter>
           </Card>
-          <Card className="flex flex-col">
+          <Card className="flex-1 flex flex-col rounded-none border-0 md:border-l">
             <CardHeader className="flex flex-row items-center justify-between p-3 sm:p-4">
               <CardTitle className="text-lg sm:text-xl">Results</CardTitle>
               <Button variant="outline" size="sm" onClick={handleClearAll} className="text-xs sm:text-sm">
@@ -130,7 +130,7 @@ export default function AICreationOutput() {
                   <TabsTrigger value="code" className="text-sm sm:text-base">Code</TabsTrigger>
                 </TabsList>
                 <TabsContent value="preview" className="flex-grow overflow-hidden mt-2 sm:mt-4">
-                  <ScrollArea className="h-[calc(100vh-20rem)] md:h-[calc(100vh-16rem)]">
+                  <ScrollArea className="h-full">
                     {results.map((result) => (
                       <div key={result.id} className="mb-3 sm:mb-4 p-3 sm:p-4 bg-muted rounded-lg text-sm sm:text-base">
                         {result.content}
@@ -139,7 +139,7 @@ export default function AICreationOutput() {
                   </ScrollArea>
                 </TabsContent>
                 <TabsContent value="code" className="flex-grow overflow-hidden mt-2 sm:mt-4">
-                  <ScrollArea className="h-[calc(100vh-20rem)] md:h-[calc(100vh-16rem)]">
+                  <ScrollArea className="h-full">
                     {results.map((result) => (
                       <pre key={result.id} className="mb-3 sm:mb-4 p-3 sm:p-4 bg-muted rounded-lg overflow-x-auto text-xs sm:text-sm">
                         <code>{result.content}</code>
