@@ -14,7 +14,7 @@ export default function generatorDashboard() {
 
   const handleGenerate = () => {
     if (prompt.trim()) {
-      router.push(`/ai-creation-output?prompt=${encodeURIComponent(prompt.trim())}`)
+      router.push(`/chat?prompt=${encodeURIComponent(prompt.trim())}`)
     }
   }
 
