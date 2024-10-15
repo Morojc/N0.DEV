@@ -185,7 +185,7 @@ export default function AICreationOutput() {
   }
 
   return (
-    <Layout hideHeader hideFooter>
+    <Layout hideHeader hideFooter isAICreatorPage>
       <div className={`flex flex-col md:flex-row h-screen ${inter.className} text-sm`}>
         {/* Chat Column */}
         <Card className="flex-1 flex flex-col rounded-none border-b md:border-r md:border-b-0 md:w-1/2 min-w-0">
