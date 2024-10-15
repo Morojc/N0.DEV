@@ -10,11 +10,12 @@ export function AnimatedLogo() {
             fill: none;
             stroke: rgba(0, 0, 0, 0.2);
             stroke-width: 2;
+            stroke-dasharray: 4 4; /* This creates the dotted effect */
           }
           .animate-draw {
             stroke-dasharray: 500;
             stroke-dashoffset: 500;
-            animation: draw 5s linear forwards infinite;
+            animation: draw 10s linear forwards infinite;
           }
           @keyframes draw {
             to {
