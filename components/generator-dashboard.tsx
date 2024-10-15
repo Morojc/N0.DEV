@@ -6,8 +6,10 @@ import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { Upload, Sparkles, Zap, Plus } from "lucide-react"
 import { useTheme } from '@/contexts/ThemeContext'
+import Image from 'next/image'
+import ImageExamples from './image-examples'
 
-export default function generatorDashboard() { 
+export default function GeneratorDashboard() { 
   const [prompt, setPrompt] = useState('')
   const { theme } = useTheme()
   const router = useRouter()
@@ -75,6 +77,8 @@ export default function generatorDashboard() {
           ))}
         </div>
       </div>
+      {/* Add the ImageExamples component here */}
+      <ImageExamples />
     </div>
   )
 }

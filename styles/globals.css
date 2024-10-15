@@ -1,0 +1,327 @@
+/* Add these styles to your existing globals.css file */
+
+.hexagon-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 90px);
+  grid-gap: 5px 30px;
+  padding: 20px 0;
+  justify-content: center;
+}
+
+.hexagon-group {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 30px; /* Increased to compensate for the increased overlap */
+}
+
+.hexagon-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hexagon-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hexagon-container {
+  width: 120px;
+  height: 138px;
+  position: relative;
+  overflow: hidden;
+  margin-left: -15px; /* Creates overlap between hexagons */
+}
+
+.hexagon-container:first-child {
+  margin-left: 0; /* Remove margin for the first hexagon */
+}
+
+.hexagon {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+
+.hexagon-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hexagon-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.hexagon-container:hover .hexagon-overlay {
+  opacity: 1;
+}
+
+.futuristic-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.image-container {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  aspect-ratio: 1 / 1;
+}
+
+.image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-wrapper img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto !important;
+  height: auto !important;
+}
+
+.image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.image-container:hover .image-overlay {
+  opacity: 1;
+}
+
+.image-container::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, #00ffff, #ff00ff);
+  z-index: -1;
+  filter: blur(10px);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.image-container:hover::before {
+  opacity: 1;
+}
+
+.image-container:hover {
+  transform: scale(1.05);
+  z-index: 1;
+}
+
+/* Add a creative carousel for the images */
+.carousel-container {
+  perspective: 1000px;
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.carousel {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  transform-style: preserve-3d;
+  animation: rotate 20s infinite linear;
+}
+
+.carousel-item {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform-origin: center center;
+  transition: transform 0.5s, opacity 0.5s;
+  opacity: 0.7;
+}
+
+.carousel-item.active {
+  opacity: 1;
+  transform: translateZ(200px) rotateY(calc(var(--rotation) * -1));
+}
+
+.carousel-item:not(.active) {
+  transform: translateZ(-200px) rotateY(var(--rotation));
+}
+
+.image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.carousel-item:hover .image-overlay {
+  opacity: 1;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(360deg);
+  }
+}
+
+/* Add a glow effect to the active image */
+.carousel-item.active::before {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  background: linear-gradient(45deg, #00ffff, #ff00ff);
+  z-index: -1;
+  filter: blur(10px);
+  opacity: 0.7;
+  border-radius: 16px;
+}
+
+/* Add a futuristic showcase */
+.futuristic-showcase {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.futuristic-showcase::-webkit-scrollbar {
+  display: none;
+}
+
+.showcase-item {
+  flex: 0 0 auto;
+  perspective: 1000px;
+}
+
+.image-frame {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  transform-style: preserve-3d;
+  transition: transform 0.6s ease-out;
+}
+
+.image-frame:hover {
+  transform: rotateY(10deg) rotateX(5deg);
+}
+
+.image-frame::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  background: linear-gradient(45deg, #00ffff, #ff00ff);
+  z-index: -1;
+  filter: blur(20px);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.image-frame:hover::before {
+  opacity: 0.7;
+}
+
+.image-frame img {
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  border-radius: 12px;
+}
+
+.image-frame:hover .image-overlay {
+  opacity: 1;
+}
+
+/* Add a subtle animation to enhance the futuristic feel */
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(0, 255, 255, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(0, 255, 255, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 255, 255, 0);
+  }
+}
+
+.image-frame {
+  animation: pulse 2s infinite;
+}
