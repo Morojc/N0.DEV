@@ -41,19 +41,19 @@ export default function StickerGeneratorDashboard() {
       </div>
       <div className="relative z-10 flex flex-1">
         {/* Sidebar */}
-        <div className={`w-16 backdrop-blur-sm p-2 flex flex-col items-center border-r ${theme === 'dark' ? 'border-gray-700' : 'border-gray-200'}`}>
-          <nav className="space-y-4 flex-grow py-4">
-            <Button variant="ghost" size="icon" title="New Sticker">
-              <PlusCircle className={`h-6 w-6 ${theme === 'dark' ? 'text-white' : 'text-gray-600'}`} />
+        <div className={`w-14 backdrop-blur-sm p-1 flex flex-col items-center border-r ${theme === 'dark' ? 'border-gray-700' : 'border-gray-200'}`}>
+          <nav className="space-y-3 flex-grow py-3">
+            <Button variant="ghost" size="icon" title="New Sticker" className="h-10 w-10">
+              <PlusCircle className={`h-5 w-5 ${theme === 'dark' ? 'text-white' : 'text-gray-600'}`} />
             </Button>
-            <Button variant="ghost" size="icon" title="My Stickers">
-              <ImageIcon className={`h-6 w-6 ${theme === 'dark' ? 'text-white' : 'text-gray-600'}`} />
+            <Button variant="ghost" size="icon" title="My Stickers" className="h-10 w-10">
+              <ImageIcon className={`h-5 w-5 ${theme === 'dark' ? 'text-white' : 'text-gray-600'}`} />
             </Button>
-            <Button variant="ghost" size="icon" title="Settings">
-              <Settings className={`h-6 w-6 ${theme === 'dark' ? 'text-white' : 'text-gray-600'}`} />
+            <Button variant="ghost" size="icon" title="Settings" className="h-10 w-10">
+              <Settings className={`h-5 w-5 ${theme === 'dark' ? 'text-white' : 'text-gray-600'}`} />
             </Button>
-            <Button variant="ghost" size="icon" title="Help">
-              <HelpCircle className={`h-6 w-6 ${theme === 'dark' ? 'text-white' : 'text-gray-600'}`} />
+            <Button variant="ghost" size="icon" title="Help" className="h-10 w-10">
+              <HelpCircle className={`h-5 w-5 ${theme === 'dark' ? 'text-white' : 'text-gray-600'}`} />
             </Button>
           </nav>
           
@@ -61,10 +61,10 @@ export default function StickerGeneratorDashboard() {
           <Popover open={isOptionsOpen} onOpenChange={setIsOptionsOpen}>
             <PopoverTrigger asChild>
               <button 
-                className={`mt-auto w-10 h-10 rounded-full bg-gradient-to-r ${theme === 'dark' ? 'from-purple-600 to-pink-600' : 'from-purple-500 to-pink-500'} flex items-center justify-center shadow-md hover:shadow-lg transition-all duration-300 group relative`}
+                className={`mt-auto w-9 h-9 rounded-full bg-gradient-to-r ${theme === 'dark' ? 'from-purple-600 to-pink-600' : 'from-purple-500 to-pink-500'} flex items-center justify-center shadow-md hover:shadow-lg transition-all duration-300 group relative`}
                 onClick={() => setIsOptionsOpen(!isOptionsOpen)}
               >
-                <User className="h-5 w-5 text-white" />
+                <User className="h-4 w-4 text-white" />
                 <span className={`absolute -inset-0.5 rounded-full bg-gradient-to-r ${theme === 'dark' ? 'from-purple-600 to-pink-600' : 'from-purple-500 to-pink-500'} opacity-75 group-hover:opacity-100 blur animate-pulse`}></span>
               </button>
             </PopoverTrigger>
@@ -135,7 +135,7 @@ export default function StickerGeneratorDashboard() {
                 <div className="relative">
                   {/* Premium message section */}
                   <div className={`${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-100'} border ${theme === 'dark' ? 'border-gray-700' : 'border-gray-300'} border-b-0 rounded-t-md p-2 flex items-center justify-between text-xs`}>
-                    <p className={theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}>Need more messages? Get higher limits with Premium.</p>
+                    <p className={theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}>Need to expand your dialogue? Upgrade to Premium for limitless messaging!</p>
                     <Button variant="outline" size="sm" className={`${theme === 'dark' ? 'text-yellow-400 border-yellow-400 hover:bg-gray-700' : 'text-yellow-600 border-yellow-600 hover:bg-yellow-50'} h-6 text-xs px-2`}>
                       <Zap className="h-3 w-3 mr-1" />
                       Upgrade
@@ -188,7 +188,7 @@ export default function StickerGeneratorDashboard() {
       {/* Updated footer section with pipe separators */}
       <footer className="relative z-10 py-2 text-center">
         <div className={`flex justify-center items-center space-x-1 text-xs ${theme === 'dark' ? 'text-gray-300' : 'text-gray-500'}`}>
-          {['FAQ', 'Pricing', 'Terms', 'AI Policy', 'Privacy', 'Legacy v0'].map((item, index) => (
+          {['FAQ', 'Pricing', 'Terms', 'AI Policy', 'Privacy', 'Legacy n0'].map((item, index) => (
             <React.Fragment key={item}>
               {index > 0 && <span className={`${theme === 'dark' ? 'text-gray-600' : 'text-gray-300'} px-1`}>|</span>}
               <a href="#" className="hover:underline">{item}</a>
