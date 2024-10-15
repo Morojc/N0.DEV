@@ -7,7 +7,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Upload, Sparkles, Zap, Plus } from "lucide-react"
 import { useTheme } from '@/contexts/ThemeContext'
 
-export default function StickerGeneratorDashboard() { 
+export default function generatorDashboard() { 
   const [prompt, setPrompt] = useState('')
   const { theme } = useTheme()
   const router = useRouter()

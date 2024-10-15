@@ -1,5 +1,5 @@
 import Layout from '@/components/Layout'
-import StickerGeneratorDashboard from '@/components/sticker-generator-dashboard'
+import GeneratorDashboard from '@/components/generator-dashboard'
 import { AnimatedLogo } from '@/components/animated-logo'
 
 export default function Home() {
@@ -11,7 +11,7 @@ export default function Home() {
             <AnimatedLogo />
           </div>
           <div className="max-w-4xl w-full px-4">
-            <StickerGeneratorDashboard />
+            <GeneratorDashboard />
           </div>
         </div>
       </div>
