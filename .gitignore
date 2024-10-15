@@ -37,3 +37,6 @@ next-env.d.ts
 
 # Requirements
 /requirements/*
+
+# Readme
+README.md
