@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { useTheme } from '@/contexts/ThemeContext'
-import { Send, Loader2, RefreshCw, User, Edit2, Globe, Lock, Share2, Paperclip, X } from 'lucide-react'
+import { Send, Loader2, RefreshCw, User, Edit2, Globe, Lock, Share2, Paperclip, X, Zap, Download } from 'lucide-react'
 import Layout from '@/components/Layout'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -191,6 +191,11 @@ export default function AICreationOutput() {
     return userName.charAt(0).toUpperCase();
   }
 
+  const handleDownload = () => {
+    // Implement download functionality here
+    console.log('Download button clicked');
+  }
+
   return (
     <Layout hideHeader hideFooter isAICreatorPage>
       <div className={`flex flex-col md:flex-row h-screen ${inter.className} text-sm`}>
@@ -286,17 +291,33 @@ export default function AICreationOutput() {
 
         {/* Results Column */}
         <Card className="flex-1 flex flex-col rounded-none md:w-1/2 min-w-0">
-          <CardHeader className="p-2 flex justify-between items-center flex-wrap">
-            <CardTitle className="text-xs md:text-sm">Generation Results</CardTitle>
-            <Button variant="outline" size="sm" onClick={handleClearAll} className="text-[10px] md:text-xs py-1 px-2 mt-1 md:mt-0">
-              <RefreshCw className="mr-1 h-2.5 w-2.5" />
-              Clear All
-            </Button>
+          <CardHeader className="p-2 flex flex-col items-start space-y-2">
+            <div className="w-full flex justify-between items-center">
+              <div className="flex items-center space-x-2">
+                <div className="w-8 h-8 rounded-full bg-gradient-to-r from-yellow-400 to-orange-500 flex items-center justify-center">
+                  <Zap className="h-5 w-5 text-white" />
+                </div>
+                <div>
+                  <h3 className="font-bold text-sm">AI Output</h3>
+                  <p className="text-xs text-gray-500">Generated results appear here</p>
+                </div>
+              </div>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={handleDownload} 
+                className="text-[10px] md:text-xs py-1 px-2"
+                title="Download Output"
+              >
+                <Download className="h-4 w-4" />
+              </Button>
+            </div>
+            <div className="w-full h-1 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full" />
           </CardHeader>
           <CardContent className="flex-grow overflow-hidden p-2">
             <ScrollArea className="h-full">
               {results.map((result) => (
-                <div key={result.id} className="mb-2 p-1.5 bg-gray-100 rounded-lg text-[10px] md:text-xs break-words">
+                <div key={result.id} className="mb-2 p-2 bg-gray-100 dark:bg-gray-800 rounded-lg text-[10px] md:text-xs break-words">
                   {result.content}
                 </div>
               ))}
