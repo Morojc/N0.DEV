@@ -8,6 +8,7 @@ import { BackgroundLines } from './background-lines'
 import { AnimatedLogo } from './animated-logo'
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { useTheme } from '@/contexts/ThemeContext'
+import AnimatedBackgroundLines from './animated-background-lines'
 
 const StyledAnimatedLogo = () => {
   return (
@@ -25,7 +26,7 @@ export default function StickerGeneratorDashboard() {
 
   return (
     <div className={`relative min-h-screen overflow-hidden flex flex-col md:flex-row ${theme === 'dark' ? 'bg-gray-900 text-white' : ''}`}>
-      <BackgroundLines />
+      <AnimatedBackgroundLines />
       {/* Beta Version Indicator */}
       <div className="absolute top-0 right-0 m-4 z-50">
         <div className="relative">
