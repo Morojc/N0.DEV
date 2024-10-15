@@ -3,12 +3,14 @@
 import { useState } from 'react'
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
-import { PlusCircle, Image as ImageIcon, Settings, HelpCircle, LogOut, Upload, Sparkles, Zap, Plus } from "lucide-react"
+import { PlusCircle, Image as ImageIcon, Settings, HelpCircle, Upload, Sparkles, Zap, Plus, User, LogOut, CreditCard, Moon, Sun, ChevronDown } from "lucide-react"
 import { BackgroundLines } from './background-lines'
 import { AnimatedLogo } from './animated-logo'
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 
 export default function StickerGeneratorDashboard() {
   const [prompt, setPrompt] = useState('')
+  const [isOptionsOpen, setIsOptionsOpen] = useState(false)
 
   return (
     <div className="relative min-h-screen overflow-hidden flex flex-col">
@@ -41,9 +43,69 @@ export default function StickerGeneratorDashboard() {
               <HelpCircle className="h-6 w-6 text-gray-600" />
             </Button>
           </nav>
-          <Button variant="ghost" size="icon" className="mt-auto" title="Logout">
-            <LogOut className="h-6 w-6 text-gray-600" />
-          </Button>
+          
+          {/* Updated User options button */}
+          <Popover open={isOptionsOpen} onOpenChange={setIsOptionsOpen}>
+            <PopoverTrigger asChild>
+              <button 
+                className="mt-auto w-10 h-10 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center shadow-md hover:shadow-lg transition-all duration-300 group relative"
+                onClick={() => setIsOptionsOpen(!isOptionsOpen)}
+              >
+                <User className="h-5 w-5 text-white" />
+                <span className="absolute -inset-0.5 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 opacity-75 group-hover:opacity-100 blur animate-pulse"></span>
+              </button>
+            </PopoverTrigger>
+            <PopoverContent className="w-64 p-0" side="right" align="end">
+              <div className="p-4 border-b border-gray-200">
+                <div className="flex items-center space-x-3">
+                  <div className="w-10 h-10 rounded-md bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center">
+                    <span className="text-lg font-semibold text-white">M</span>
+                  </div>
+                  <div>
+                    <p className="font-semibold">morojc</p>
+                    <p className="text-xs text-gray-500">hmoro.dev@outlook.com</p>
+                    <p className="text-xs text-gray-500">Free</p>
+                  </div>
+                </div>
+              </div>
+              <div className="p-2">
+                <Button variant="ghost" className="w-full justify-start text-gray-700 hover:bg-gray-100" size="sm">
+                  <CreditCard className="h-4 w-4 mr-2" />
+                  Billing
+                </Button>
+                <Button variant="ghost" className="w-full justify-start text-gray-700 hover:bg-gray-100" size="sm">
+                  <LogOut className="h-4 w-4 mr-2" />
+                  Sign Out
+                </Button>
+              </div>
+              <div className="p-2 border-t border-gray-200">
+                <p className="text-xs font-semibold text-gray-500 mb-2">Preferences</p>
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-sm text-gray-700">Theme</span>
+                  <div className="flex space-x-1">
+                    <Button variant="outline" size="sm" className="p-1">
+                      <Sun className="h-4 w-4" />
+                    </Button>
+                    <Button variant="outline" size="sm" className="p-1">
+                      <Moon className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-gray-700">Language</span>
+                  <Button variant="outline" size="sm" className="text-xs">
+                    English
+                    <ChevronDown className="h-3 w-3 ml-1" />
+                  </Button>
+                </div>
+              </div>
+              <div className="p-2 border-t border-gray-200">
+                <Button className="w-full bg-black text-white hover:bg-gray-800" size="sm">
+                  Upgrade Plan
+                </Button>
+              </div>
+            </PopoverContent>
+          </Popover>
         </div>
 
         {/* Main content */}
