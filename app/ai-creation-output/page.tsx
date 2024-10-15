@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { useTheme } from '@/contexts/ThemeContext'
-import { Sparkles, Send, Loader2, RefreshCw } from 'lucide-react'
+import { Send, Loader2, RefreshCw, User, Bot } from 'lucide-react'
 import Layout from '@/components/Layout'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -85,11 +85,18 @@ export default function AICreationOutput() {
                 {messages.map((message) => (
                   <div
                     key={message.id}
-                    className={`mb-2 p-2 rounded-lg text-xs sm:text-sm ${
-                      message.isUser ? "bg-primary text-primary-foreground ml-auto" : "bg-muted"
-                    } max-w-[85%] sm:max-w-[80%]`}
+                    className="flex items-start mb-2 space-x-2"
                   >
-                    {message.content}
+                    <div className={`rounded-full p-1 ${message.isUser ? 'bg-blue-500' : 'bg-gray-300'}`}>
+                      {message.isUser ? <User size={16} className="text-white" /> : <Bot size={16} className="text-gray-700" />}
+                    </div>
+                    <div 
+                      className={`p-2 rounded-lg text-xs sm:text-sm max-w-[85%] ${
+                        message.isUser ? "bg-blue-100 text-blue-900" : "bg-gray-100 text-gray-900"
+                      }`}
+                    >
+                      {message.content}
+                    </div>
                   </div>
                 ))}
               </ScrollArea>
