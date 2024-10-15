@@ -77,15 +77,15 @@ export default function AICreationOutput() {
       <div className="flex h-screen">
         <div className="flex-1 flex flex-col md:flex-row">
           <Card className="flex-1 flex flex-col rounded-none border-0">
-            <CardHeader className="p-3 sm:p-4">
-              <CardTitle className="text-lg sm:text-xl">Chat</CardTitle>
+            <CardHeader className="p-2 sm:p-3">
+              <CardTitle className="text-base sm:text-lg">Chat</CardTitle>
             </CardHeader>
-            <CardContent className="flex-grow overflow-hidden p-2 sm:p-4">
-              <ScrollArea className="h-full pr-2 sm:pr-4">
+            <CardContent className="flex-grow overflow-hidden p-2 sm:p-3">
+              <ScrollArea className="h-full pr-2">
                 {messages.map((message) => (
                   <div
                     key={message.id}
-                    className={`mb-3 p-2 sm:p-3 rounded-lg text-sm sm:text-base ${
+                    className={`mb-2 p-2 rounded-lg text-xs sm:text-sm ${
                       message.isUser ? "bg-primary text-primary-foreground ml-auto" : "bg-muted"
                     } max-w-[85%] sm:max-w-[80%]`}
                   >
@@ -94,7 +94,7 @@ export default function AICreationOutput() {
                 ))}
               </ScrollArea>
             </CardContent>
-            <CardFooter className="p-2 sm:p-4">
+            <CardFooter className="p-2 sm:p-3">
               <form
                 onSubmit={(e) => {
                   e.preventDefault()
@@ -107,41 +107,41 @@ export default function AICreationOutput() {
                   placeholder="Type your prompt..."
                   value={currentPrompt}
                   onChange={(e) => setCurrentPrompt(e.target.value)}
-                  className="text-sm sm:text-base"
+                  className="text-xs sm:text-sm"
                 />
-                <Button type="submit" size="icon" disabled={isGenerating || !currentPrompt.trim()}>
-                  {isGenerating ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
+                <Button type="submit" size="sm" disabled={isGenerating || !currentPrompt.trim()}>
+                  {isGenerating ? <Loader2 className="h-3 w-3 animate-spin" /> : <Send className="h-3 w-3" />}
                 </Button>
               </form>
             </CardFooter>
           </Card>
           <Card className="flex-1 flex flex-col rounded-none border-0 md:border-l">
-            <CardHeader className="flex flex-row items-center justify-between p-3 sm:p-4">
-              <CardTitle className="text-lg sm:text-xl">Results</CardTitle>
-              <Button variant="outline" size="sm" onClick={handleClearAll} className="text-xs sm:text-sm">
-                <RefreshCw className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
+            <CardHeader className="flex flex-row items-center justify-between p-2 sm:p-3">
+              <CardTitle className="text-base sm:text-lg">Results</CardTitle>
+              <Button variant="outline" size="sm" onClick={handleClearAll} className="text-xs">
+                <RefreshCw className="h-3 w-3 mr-1" />
                 Clear All
               </Button>
             </CardHeader>
-            <CardContent className="flex-grow overflow-hidden p-2 sm:p-4">
+            <CardContent className="flex-grow overflow-hidden p-2 sm:p-3">
               <Tabs defaultValue="preview" className="h-full flex flex-col">
-                <TabsList className="grid w-full grid-cols-2 mb-2 sm:mb-4">
-                  <TabsTrigger value="preview" className="text-sm sm:text-base">Preview</TabsTrigger>
-                  <TabsTrigger value="code" className="text-sm sm:text-base">Code</TabsTrigger>
+                <TabsList className="grid w-full grid-cols-2 mb-2">
+                  <TabsTrigger value="preview" className="text-xs sm:text-sm">Preview</TabsTrigger>
+                  <TabsTrigger value="code" className="text-xs sm:text-sm">Code</TabsTrigger>
                 </TabsList>
-                <TabsContent value="preview" className="flex-grow overflow-hidden mt-2 sm:mt-4">
+                <TabsContent value="preview" className="flex-grow overflow-hidden mt-2">
                   <ScrollArea className="h-full">
                     {results.map((result) => (
-                      <div key={result.id} className="mb-3 sm:mb-4 p-3 sm:p-4 bg-muted rounded-lg text-sm sm:text-base">
+                      <div key={result.id} className="mb-2 p-2 sm:p-3 bg-muted rounded-lg text-xs sm:text-sm">
                         {result.content}
                       </div>
                     ))}
                   </ScrollArea>
                 </TabsContent>
-                <TabsContent value="code" className="flex-grow overflow-hidden mt-2 sm:mt-4">
+                <TabsContent value="code" className="flex-grow overflow-hidden mt-2">
                   <ScrollArea className="h-full">
                     {results.map((result) => (
-                      <pre key={result.id} className="mb-3 sm:mb-4 p-3 sm:p-4 bg-muted rounded-lg overflow-x-auto text-xs sm:text-sm">
+                      <pre key={result.id} className="mb-2 p-2 sm:p-3 bg-muted rounded-lg overflow-x-auto text-xs">
                         <code>{result.content}</code>
                       </pre>
                     ))}
