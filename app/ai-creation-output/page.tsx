@@ -3,14 +3,17 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { useTheme } from '@/contexts/ThemeContext'
-import { Send, Loader2, RefreshCw, User, Bot, Lock, Globe, Edit2 } from 'lucide-react'
+import { Send, Loader2, RefreshCw, User, Edit2, Globe, Lock, Share2, Paperclip, X } from 'lucide-react'
 import Layout from '@/components/Layout'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { Inter } from 'next/font/google'
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog"
+import { Label } from "@/components/ui/label"
+
+const inter = Inter({ subsets: ['latin'] })
 
 type Message = {
   id: number
@@ -22,6 +25,38 @@ type Result = {
   id: number
   content: string
 }
+
+const AnimatedAILogo = () => (
+  <svg
+    width="18"
+    height="18"
+    viewBox="0 0 100 100"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <g>
+      {/* A */}
+      <path d="M15 80L35 20H55L75 80H60L55 65H35L30 80H15ZM39 50H51L45 30L39 50Z" fill="currentColor">
+        <animate
+          attributeName="opacity"
+          values="1;0.5;1"
+          dur="2s"
+          repeatCount="indefinite"
+        />
+      </path>
+      
+      {/* I */}
+      <path d="M80 20H95V80H80V20Z" fill="currentColor">
+        <animate
+          attributeName="opacity"
+          values="1;0.5;1"
+          dur="2s"
+          repeatCount="indefinite"
+        />
+      </path>
+    </g>
+  </svg>
+)
 
 export default function AICreationOutput() {
   const [messages, setMessages] = useState<Message[]>([])
@@ -36,6 +71,12 @@ export default function AICreationOutput() {
   const initialPrompt = searchParams.get('prompt')
   const { theme } = useTheme()
   const titleInputRef = useRef<HTMLSpanElement>(null)
+  const [isPublic, setIsPublic] = useState(true)
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
+  const [showMobileResultModal, setShowMobileResultModal] = useState(false)
+  const [latestResult, setLatestResult] = useState<Result | null>(null)
+  const [textareaHeight, setTextareaHeight] = useState(60) // Initial height
+  const textareaRef = useRef<HTMLTextAreaElement>(null)
 
   useEffect(() => {
     if (initialPrompt) {
@@ -48,6 +89,15 @@ export default function AICreationOutput() {
       titleInputRef.current.style.width = `${titleInputRef.current.scrollWidth}px`
     }
   }, [title])
+
+  useEffect(() => {
+    if (textareaRef.current) {
+      const scrollHeight = textareaRef.current.scrollHeight
+      if (scrollHeight > 60 && textareaHeight === 60) {
+        setTextareaHeight(Math.min(scrollHeight, 120)) // Increase height up to 120px
+      }
+    }
+  }, [currentPrompt, textareaHeight])
 
   const handleSendPrompt = async (prompt: string) => {
     if (!prompt.trim()) return
@@ -69,6 +119,7 @@ export default function AICreationOutput() {
         content: `Generated result for: "${prompt}"`,
       }
       setResults((prevResults) => [...prevResults, newResult])
+      setLatestResult(newResult)
       setIsGenerating(false)
 
       const assistantMessage: Message = {
@@ -77,6 +128,11 @@ export default function AICreationOutput() {
         isUser: false,
       }
       setMessages((prevMessages) => [...prevMessages, assistantMessage])
+
+      // Show the mobile result modal
+      if (window.innerWidth < 768) {
+        setShowMobileResultModal(true)
+      }
     }, 2000)
   }
 
@@ -85,138 +141,204 @@ export default function AICreationOutput() {
     setResults([])
   }
 
+  const handleTitleClick = () => {
+    setIsDialogOpen(true)
+    setTempTitle(title)
+  }
+
   const handleTitleChange = () => {
     setTitle(tempTitle)
-    setIsEditingTitle(false)
+    setIsDialogOpen(false)
+  }
+
+  const handlePublicToggle = () => {
+    setIsPublic(!isPublic)
+  }
+
+  // Add this function to generate a random gradient
+  const getRandomGradient = () => {
+    const colors = [
+      'from-blue-500 to-purple-500',
+      'from-green-500 to-teal-500',
+      'from-orange-500 to-red-500',
+      'from-pink-500 to-rose-500',
+      'from-indigo-500 to-blue-500'
+    ];
+    return colors[Math.floor(Math.random() * colors.length)];
+  }
+
+  const getLabelColor = () => {
+    if (isPublic) {
+      return 'bg-gradient-to-r from-green-400 to-blue-500 text-white';
+    }
+    return 'bg-gradient-to-r from-yellow-400 to-orange-500 text-white';
+  }
+
+  const handleShare = () => {
+    // Implement share functionality here
+    console.log('Share button clicked');
+  }
+
+  const handleFileUpload = () => {
+    // Implement file upload functionality here
+    console.log('File upload button clicked');
   }
 
   return (
-    <Layout hideHeader>
-      <div className="flex h-screen">
-        <div className="flex-1 flex flex-col md:flex-row">
-          <Card className="flex-1 flex flex-col rounded-none border-0">
-            <CardHeader className="p-2 sm:p-3 flex flex-row items-center justify-between">
-              <div className="flex items-center space-x-2">
-                <Dialog open={isEditingTitle} onOpenChange={setIsEditingTitle}>
-                  <DialogTrigger asChild>
-                    <Button variant="ghost" className="p-1 h-auto">
-                      <span className="text-xs sm:text-sm font-arial mr-2">{title}</span>
-                      <Edit2 className="h-3 w-3" />
-                    </Button>
-                  </DialogTrigger>
-                  <DialogContent className="sm:max-w-[425px]">
-                    <DialogHeader>
-                      <DialogTitle>Edit Title</DialogTitle>
-                    </DialogHeader>
-                    <div className="grid gap-4 py-4">
-                      <Input
-                        id="title"
-                        value={tempTitle}
-                        onChange={(e) => setTempTitle(e.target.value)}
-                        className="col-span-3"
-                      />
-                    </div>
-                    <Button onClick={handleTitleChange}>Save changes</Button>
-                  </DialogContent>
-                </Dialog>
-                <Button
-                  size="sm"
-                  variant="outline"
-                  className={`text-[8px] sm:text-[10px] h-6 px-2 flex items-center 
-                    ${isPrivate 
-                      ? 'bg-gradient-to-r from-red-500 to-pink-500 text-white hover:from-red-600 hover:to-pink-600' 
-                      : 'bg-gradient-to-r from-green-400 to-blue-500 text-white hover:from-green-500 hover:to-blue-600'
-                    } transition-all duration-300 shadow-md hover:shadow-lg`}
-                  onClick={() => setIsPrivate(!isPrivate)}
-                >
-                  {isPrivate ? (
-                    <Lock className="h-3 w-3 mr-1" />
-                  ) : (
-                    <Globe className="h-3 w-3 mr-1" />
-                  )}
-                  <span className="ml-1">{isPrivate ? 'Private' : 'Public'}</span>
-                </Button>
+    <Layout hideHeader hideFooter>
+      <div className={`flex flex-col md:flex-row h-screen ${inter.className} text-sm`}>
+        {/* Chat Column */}
+        <Card className="flex-1 flex flex-col rounded-none border-b md:border-r md:border-b-0 md:w-1/2 min-w-0">
+          <CardHeader className="p-2 flex flex-row items-center justify-between flex-wrap">
+            <div className="flex items-center cursor-pointer flex-wrap" onClick={handleTitleClick}>
+              <CardTitle className="text-xs md:text-sm font-normal mr-1 underline truncate max-w-[100px] md:max-w-none">{title}</CardTitle>
+              <Edit2 size={12} className="mr-1 shrink-0" />
+              <div className={`flex items-center text-[10px] md:text-xs px-1 py-0.5 rounded-full ${getLabelColor()} shrink-0`} style={{ height: '16px', lineHeight: '12px' }}>
+                {isPublic ? (
+                  <>
+                    <Globe size={8} className="mr-0.5" />
+                    <span className="hidden md:inline">Public</span>
+                  </>
+                ) : (
+                  <>
+                    <Lock size={8} className="mr-0.5" />
+                    <span className="hidden md:inline">Private</span>
+                  </>
+                )}
               </div>
-            </CardHeader>
-            <CardContent className="flex-grow overflow-hidden p-2 sm:p-3">
-              <ScrollArea className="h-full pr-2">
-                {messages.map((message) => (
-                  <div
-                    key={message.id}
-                    className="flex items-start mb-2 space-x-2"
-                  >
-                    <div className={`rounded-full p-1 ${message.isUser ? 'bg-blue-500' : 'bg-gray-300'}`}>
-                      {message.isUser ? <User size={12} className="text-white" /> : <Bot size={12} className="text-gray-700" />}
-                    </div>
-                    <div 
-                      className={`p-2 rounded-lg text-[10px] sm:text-xs max-w-[85%] ${
-                        message.isUser ? "bg-blue-100 text-blue-900" : "bg-gray-100 text-gray-900"
-                      }`}
-                    >
-                      {message.content}
-                    </div>
+            </div>
+            <Button variant="ghost" size="sm" className="p-0.5 shrink-0" onClick={handleShare}>
+              <Share2 size={14} />
+            </Button>
+          </CardHeader>
+          <CardContent className="flex-grow overflow-hidden p-2">
+            <ScrollArea className="h-full pr-2">
+              {messages.map((message) => (
+                <div key={message.id} className="flex mb-2 ml-1">
+                  <div className={`w-5 h-5 rounded-full flex items-center justify-center mr-1.5 shrink-0 ${
+                    message.isUser ? 'bg-blue-500' : ''
+                  }`}>
+                    {message.isUser ? <User size={10} className="text-white" /> : <AnimatedAILogo />}
                   </div>
-                ))}
-              </ScrollArea>
-            </CardContent>
-            <CardFooter className="p-2 sm:p-3">
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault()
-                  handleSendPrompt(currentPrompt)
-                }}
-                className="flex w-full items-center space-x-2"
-              >
-                <Input
-                  type="text"
-                  placeholder="Type your prompt..."
+                  <div className={`flex-1 text-[10px] md:text-xs ${message.isUser ? 'pt-0.5' : 'pt-1'} break-words`}>
+                    {message.content}
+                  </div>
+                </div>
+              ))}
+            </ScrollArea>
+          </CardContent>
+          <CardFooter className="p-2">
+            <form onSubmit={(e) => {
+              e.preventDefault()
+              handleSendPrompt(currentPrompt)
+            }} className="flex w-full relative">
+              <div className="relative flex-grow">
+                <textarea
+                  ref={textareaRef}
                   value={currentPrompt}
                   onChange={(e) => setCurrentPrompt(e.target.value)}
-                  className="text-[10px] sm:text-xs"
+                  placeholder="Type your message..."
+                  className="flex-grow text-[10px] md:text-xs p-2 w-full resize-none rounded-md border border-input bg-background ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 pr-20 overflow-y-auto scrollbar-hide"
+                  style={{
+                    height: `${textareaHeight}px`,
+                    scrollbarWidth: 'none',
+                    msOverflowStyle: 'none',
+                  }}
                 />
-                <Button type="submit" size="sm" disabled={isGenerating || !currentPrompt.trim()}>
-                  {isGenerating ? <Loader2 className="h-3 w-3 animate-spin" /> : <Send className="h-3 w-3" />}
-                </Button>
-              </form>
-            </CardFooter>
-          </Card>
-          <Card className="flex-1 flex flex-col rounded-none border-0 md:border-l">
-            <CardHeader className="flex flex-row items-center justify-between p-2 sm:p-3">
-              <CardTitle className="text-xs sm:text-sm">Results</CardTitle>
-              <Button variant="outline" size="sm" onClick={handleClearAll} className="text-[10px] sm:text-xs">
-                <RefreshCw className="h-2 w-2 mr-1" />
-                Clear All
-              </Button>
-            </CardHeader>
-            <CardContent className="flex-grow overflow-hidden p-2 sm:p-3">
-              <Tabs defaultValue="preview" className="h-full flex flex-col">
-                <TabsList className="grid w-full grid-cols-2 mb-2">
-                  <TabsTrigger value="preview" className="text-[10px] sm:text-xs">Preview</TabsTrigger>
-                  <TabsTrigger value="code" className="text-[10px] sm:text-xs">Code</TabsTrigger>
-                </TabsList>
-                <TabsContent value="preview" className="flex-grow overflow-hidden mt-2">
-                  <ScrollArea className="h-full">
-                    {results.map((result) => (
-                      <div key={result.id} className="mb-2 p-2 sm:p-3 bg-muted rounded-lg text-[10px] sm:text-xs">
-                        {result.content}
-                      </div>
-                    ))}
-                  </ScrollArea>
-                </TabsContent>
-                <TabsContent value="code" className="flex-grow overflow-hidden mt-2">
-                  <ScrollArea className="h-full">
-                    {results.map((result) => (
-                      <pre key={result.id} className="mb-2 p-2 sm:p-3 bg-muted rounded-lg overflow-x-auto text-[10px] sm:text-xs">
-                        <code>{result.content}</code>
-                      </pre>
-                    ))}
-                  </ScrollArea>
-                </TabsContent>
-              </Tabs>
-            </CardContent>
-          </Card>
-        </div>
+                <div className="absolute bottom-2 right-2 flex items-center space-x-2 bg-background">
+                  <Button 
+                    type="button" 
+                    variant="ghost" 
+                    size="sm" 
+                    className="p-1" 
+                    onClick={handleFileUpload}
+                  >
+                    <Paperclip size={12} />
+                  </Button>
+                  <Button 
+                    type="submit" 
+                    disabled={isGenerating} 
+                    size="sm" 
+                    className="p-1 px-3 min-w-[60px]"
+                  >
+                    {isGenerating ? <Loader2 className="animate-spin h-3 w-3" /> : <Send size={12} />}
+                  </Button>
+                </div>
+              </div>
+            </form>
+          </CardFooter>
+        </Card>
+
+        {/* Results Column */}
+        <Card className="flex-1 flex flex-col rounded-none md:w-1/2 min-w-0">
+          <CardHeader className="p-2 flex justify-between items-center flex-wrap">
+            <CardTitle className="text-xs md:text-sm">Generation Results</CardTitle>
+            <Button variant="outline" size="sm" onClick={handleClearAll} className="text-[10px] md:text-xs py-1 px-2 mt-1 md:mt-0">
+              <RefreshCw className="mr-1 h-2.5 w-2.5" />
+              Clear All
+            </Button>
+          </CardHeader>
+          <CardContent className="flex-grow overflow-hidden p-2">
+            <ScrollArea className="h-full">
+              {results.map((result) => (
+                <div key={result.id} className="mb-2 p-1.5 bg-gray-100 rounded-lg text-[10px] md:text-xs break-words">
+                  {result.content}
+                </div>
+              ))}
+            </ScrollArea>
+          </CardContent>
+        </Card>
       </div>
+
+      {/* Mobile Result Modal */}
+      {showMobileResultModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 md:hidden">
+          <div className="bg-white rounded-lg w-full max-w-md">
+            <div className="flex justify-between items-center p-4 border-b">
+              <h3 className="text-lg font-semibold">Generation Result</h3>
+              <Button variant="ghost" size="sm" onClick={() => setShowMobileResultModal(false)}>
+                <X size={20} />
+              </Button>
+            </div>
+            <div className="p-4">
+              <p className="text-sm">{latestResult?.content}</p>
+            </div>
+            <div className="flex justify-end p-4 border-t">
+              <Button variant="outline" size="sm" onClick={() => setShowMobileResultModal(false)}>
+                Close
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogContent className="max-w-sm">
+          <DialogHeader>
+            <DialogTitle className="text-base">Edit Dashboard Title</DialogTitle>
+          </DialogHeader>
+          <Input
+            value={tempTitle}
+            onChange={(e) => setTempTitle(e.target.value)}
+            placeholder="Enter new title"
+            className="text-sm"
+          />
+          <div className="flex items-center space-x-2">
+            <input
+              type="checkbox"
+              id="publicToggle"
+              checked={isPublic}
+              onChange={handlePublicToggle}
+              className="w-4 h-4"
+            />
+            <Label htmlFor="publicToggle" className="text-sm">Public</Label>
+          </div>
+          <DialogFooter>
+            <Button onClick={() => setIsDialogOpen(false)} size="sm">Cancel</Button>
+            <Button onClick={handleTitleChange} size="sm">Save</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </Layout>
   )
 }

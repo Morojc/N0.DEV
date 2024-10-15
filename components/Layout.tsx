@@ -12,6 +12,7 @@ import Link from 'next/link'
 interface LayoutProps {
   children: React.ReactNode;
   hideHeader?: boolean;
+  hideFooter?: boolean;
 }
 
 const StyledAnimatedLogo = () => {
@@ -22,7 +23,7 @@ const StyledAnimatedLogo = () => {
   )
 }
 
-export default function Layout({ children, hideHeader = false }: LayoutProps) { 
+export default function Layout({ children, hideHeader = false, hideFooter = false }: LayoutProps) { 
   const [isOptionsOpen, setIsOptionsOpen] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const { theme, toggleTheme } = useTheme()
@@ -152,16 +153,18 @@ export default function Layout({ children, hideHeader = false }: LayoutProps) {
         </main>
 
         {/* Footer */}
-        <footer className="relative z-10 py-2 text-center">
-          <div className={`flex flex-wrap justify-center items-center space-x-1 text-xs ${theme === 'dark' ? 'text-gray-300' : 'text-gray-500'}`}>
-            {['FAQ', 'Pricing', 'Terms', 'AI Policy', 'Privacy', 'Legacy n0'].map((item, index) => (
-              <React.Fragment key={item}>
-                {index > 0 && <span className={`${theme === 'dark' ? 'text-gray-600' : 'text-gray-300'} px-1`}>|</span>}
-                <a href="#" className="hover:underline">{item}</a>
-              </React.Fragment>
-            ))}
-          </div>
-        </footer>
+        {!hideFooter && (
+          <footer className="relative z-10 py-2 text-center">
+            <div className={`flex flex-wrap justify-center items-center space-x-1 text-xs ${theme === 'dark' ? 'text-gray-300' : 'text-gray-500'}`}>
+              {['FAQ', 'Pricing', 'Terms', 'AI Policy', 'Privacy', 'Legacy n0'].map((item, index) => (
+                <React.Fragment key={item}>
+                  {index > 0 && <span className={`${theme === 'dark' ? 'text-gray-600' : 'text-gray-300'} px-1`}>|</span>}
+                  <a href="#" className="hover:underline">{item}</a>
+                </React.Fragment>
+              ))}
+            </div>
+          </footer>
+        )}
       </div>
     </div>
   )
