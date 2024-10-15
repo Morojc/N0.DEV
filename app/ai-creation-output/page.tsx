@@ -75,7 +75,6 @@ export default function AICreationOutput() {
   return (
     <Layout hideHeader>
       <div className="container mx-auto p-4 h-screen flex flex-col">
-        <h1 className="text-2xl font-bold mb-6">AI Creation Output</h1>
         <div className="grid gap-6 md:grid-cols-2 flex-grow">
           <Card className="flex flex-col">
             <CardHeader>
