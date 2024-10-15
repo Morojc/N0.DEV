@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
-import { PlusCircle, Image as ImageIcon, Settings, HelpCircle, LogOut, Upload, Sparkles } from "lucide-react"
+import { PlusCircle, Image as ImageIcon, Settings, HelpCircle, LogOut, Upload, Sparkles, Zap } from "lucide-react"
 import { BackgroundLines } from './background-lines'
 import { AnimatedLogo } from './animated-logo'
 
@@ -50,13 +50,24 @@ export default function StickerGeneratorDashboard() {
                   <h2 className="text-3xl font-bold mb-2 text-gray-900">What can I help you shape?</h2>
                   <p className="text-lg text-gray-700">Generate stickers, ask more, be creative</p>
                 </div>
+                
                 <div className="relative">
+                  {/* New Premium message section */}
+                  <div className="bg-gray-100 border border-gray-300 border-b-0 rounded-t-md p-2 flex items-center justify-between text-xs">
+                    <p className="text-gray-700">Need more messages? Get higher limits with Premium.</p>
+                    <Button variant="outline" size="sm" className="text-yellow-600 border-yellow-600 hover:bg-yellow-50 h-6 text-xs px-2">
+                      <Zap className="h-3 w-3 mr-1" />
+                      Upgrade
+                    </Button>
+                  </div>
+
                   <Textarea
                     id="prompt"
                     placeholder="Describe the sticker you want to generate... Let your imagination run wild!"
                     value={prompt}
                     onChange={(e) => setPrompt(e.target.value)}
-                    className="h-32 pb-12 backdrop-blur-sm border-gray-300 focus:border-gray-400 focus:ring-gray-400"
+                    className="h-24 pb-12 backdrop-blur-sm border-gray-300 focus:border-gray-400 focus:ring-gray-400 resize-none rounded-t-none"
+                    style={{ minHeight: '96px', maxHeight: '96px' }}
                   />
                   <Button 
                     className="absolute bottom-2 right-2 bg-gray-800 hover:bg-gray-900 text-white"
